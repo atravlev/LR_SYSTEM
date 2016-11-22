@@ -28,18 +28,17 @@ class User {
             $this->find($user);
         }
     }
-    
-    public function update($id = null ,$fields = array()) {
-        
-        if(!$id && $this->isLoggedIn()) {
+
+    public function update($id = null, $fields = array()) {
+
+        if (!$id && $this->isLoggedIn()) {
             $id = $this->data()->id;
         }
-        
-        if(!$this->_db->update('users', $id, $fields)) {
+
+        if (!$this->_db->update('users', $id, $fields)) {
             throw new Exception('There was a problem updating !');
         }
     }
-
 
     public function create($fields = array()) {
         if (!$this->_db->insert('users', $fields)) {
@@ -61,7 +60,7 @@ class User {
 
     public function logout() {
         $this->_db->delete('users_session', array('user_id', '=', $this->data()->id));
-        
+
         Session::delete($this->_sessionName);
         Cookie::delete($this->_cookieName);
     }
@@ -72,7 +71,7 @@ class User {
         if (!$username && !$password && $this->exists()) {
             Session::put($this->_sessionName, $this->data()->id);
         } else {
-            
+
             if ($user) {
                 if ($this->data()->password === Hash::make($password, $this->data()->salt)) {
                     Session::put($this->_sessionName, $this->data()->id);
@@ -96,11 +95,11 @@ class User {
                     return true;
                 }
             }
-            
+
             return false;
         }
     }
-    
+
     public function exists() {
         return(!empty($this->_data)) ? true : false;
     }

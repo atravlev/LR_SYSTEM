@@ -13,6 +13,7 @@ class Cookie {
         if(setcookie($name, $value, time() + $expiry, '/')) {
             return true;
         }
+        
         return false;
     }
 
