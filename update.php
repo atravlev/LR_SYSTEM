@@ -20,7 +20,7 @@ if (Input::exists()) {
 
         if ($validation->passed()) {
             try {
-                $user->update('users', array(
+                $user->update($user->data()->id, array(
                     'name' => Input::get('name')
                 ));
 
